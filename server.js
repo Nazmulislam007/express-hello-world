@@ -26,12 +26,11 @@ const {
 const app = express();
 
 const url =
-  process.env.NODE_ENV.trim() === "development"
+  process.env.NODE_ENV === "development"
     ? "mongodb://127.0.0.1:27017/book-app"
     : process.env.MONGDB_URL;
 
 // database setup
-mongoose.set("strictQuery", false);
 async function main() {
   await mongoose.connect(url);
 }
@@ -56,9 +55,9 @@ app.use(
     }),
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV.trim() === "production" ? true : "auto",
+      secure: process.env.NODE_ENV === "production" ? true : "auto",
       httpOnly: true,
-      sameSite: process.env.NODE_ENV.trim() === "production" ? "none" : "lax",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 1000 * 60 * 60 * 24,
     },
   })
@@ -94,7 +93,7 @@ app.use(errorHandler); // default error
 app.listen(PORT, () =>
   console.log(
     `server running on url: ${
-      process.env.NODE_ENV.trim() === "production"
+      process.env.NODE_ENV === "production"
         ? "https://book-api-5xof.onrender.com/books"
         : `http://localhost:${PORT}/books`
     }`

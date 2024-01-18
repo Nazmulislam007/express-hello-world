@@ -6,7 +6,7 @@ const notFoundHandler = (req, res, next) => {
 
 const errorHandler = (err, req, res) => {
   res.locals.error =
-    process.env.NODE_ENV.trim() === "development"
+    process.env.NODE_ENV === "development"
       ? err
       : { message: err.message };
 
